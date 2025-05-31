@@ -4,7 +4,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.List;
+
+import org.springframework.context.annotation.Lazy;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 
 @Entity
@@ -22,7 +31,12 @@ public class User {
     private String password;
     @Column (name = "cPhone")
     private String phone;
-
+    @JsonIgnore
+    @OneToMany(mappedBy= "user", cascade = CascadeType.ALL) //cascade para salvar filhos com o pai
+    private List<Order> order; //um usuario tem varios pedidos 
+    
+    
+    
     public User(){
 
     }
@@ -33,6 +47,7 @@ public class User {
         this.password = password;
         this.phone = phone;
     }
+
 
 
 
@@ -99,6 +114,12 @@ public class User {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+    public List<Order> getOrder() {
+        return order;
+    }
+    public void setOrder(List<Order> order) {
+        this.order = order;
     }
     
 
