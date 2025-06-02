@@ -3,18 +3,9 @@ package dev.Practice.DeliverySystem.model.entities;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.Practice.DeliverySystem.model.entities.Enums.OrderStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="tb_order")
@@ -26,7 +17,8 @@ public class Order {
     private LocalDateTime moment;
     @Enumerated(EnumType.STRING)  //transforma em uma enum do tipo string no db  
     private OrderStatus orderStatus;
-    @ManyToOne 
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id") //decclarando a coluna de chave estranjeira e o tipo dela abaixo
     private User user;
 

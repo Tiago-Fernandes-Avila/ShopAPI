@@ -1,20 +1,13 @@
 package dev.Practice.DeliverySystem.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Lazy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "tbUser")
@@ -31,9 +24,9 @@ public class User {
     private String password;
     @Column (name = "cPhone")
     private String phone;
-    @JsonIgnore
-    @OneToMany(mappedBy= "user", cascade = CascadeType.ALL) //cascade para salvar filhos com o pai
-    private List<Order> order; //um usuario tem varios pedidos 
+
+    @OneToMany(mappedBy= "user", cascade = CascadeType.ALL) //cascade para salvar filhos com o pai                 //o que é Fetch type !!!!!
+    private List<Order> order = new ArrayList<>(); //um usuario tem varios pedidos
     
     
     
@@ -116,12 +109,9 @@ public class User {
         return true;
     }
     public List<Order> getOrder() {
-        return order;
+        return  order;
     }
-    public void setOrder(List<Order> order) {
-        this.order = order;
-    }
-    
+
 
 
 }

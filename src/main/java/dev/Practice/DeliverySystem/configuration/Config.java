@@ -40,7 +40,7 @@ public static final DateTimeFormatter fmt = DateTimeFormatter.ISO_DATE_TIME;
             
          Order o1 = new Order(null, LocalDateTime.parse("2019-06-20T19:53:07Z",fmt), OrderStatus.WAITING_PAYMENT, u1);
         Order o2 = new Order(null, LocalDateTime.parse("2019-06-20T19:53:07Z",fmt), OrderStatus.WAITING_PAYMENT,u2);
-        Order o3 = new Order(null, LocalDateTime.parse("2019-06-20T19:53:07Z",fmt), OrderStatus.WAITING_PAYMENT, u1);
+        Order o3 = new Order(null, LocalDateTime.parse("2019-06-20T19:53:07Z",fmt), OrderStatus.WAITING_PAYMENT, u2);
        
             repository.saveAll(Arrays.asList(u1,u2,u3));
             orderRepository.saveAll(Arrays.asList(o1,o2,o3)); 
