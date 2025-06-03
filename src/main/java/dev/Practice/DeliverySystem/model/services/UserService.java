@@ -23,4 +23,11 @@ public class UserService {
 
     } 
 
+    @Transactional 
+    public UserFullDTO findFullDtoById(Long id){
+        UserFullDTO uDto = new UserFullDTO(repository.findById(id).get());
+        return uDto;
+
+    }
+
 }

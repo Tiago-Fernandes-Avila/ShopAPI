@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +33,11 @@ public class UserController {
     public ResponseEntity<List<UserFullDTO>> findAll() {
         List<UserFullDTO> list = service.FindAllFullUserDTO();
         return ResponseEntity.ok().body(list);
+    }
+    @GetMapping (value = "/{id}")
+    public UserFullDTO findUserFullDTOById(@PathVariable Long id){
+
+        return service.findFullDtoById(id);
     }
     
     

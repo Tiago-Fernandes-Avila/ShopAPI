@@ -24,7 +24,7 @@ public class User {
     private String password;
     @Column (name = "cPhone")
     private String phone;
-
+    @JsonIgnore
     @OneToMany(mappedBy= "user", cascade = CascadeType.ALL) //cascade para salvar filhos com o pai                 //o que é Fetch type !!!!!
     private List<Order> order = new ArrayList<>(); //um usuario tem varios pedidos
     

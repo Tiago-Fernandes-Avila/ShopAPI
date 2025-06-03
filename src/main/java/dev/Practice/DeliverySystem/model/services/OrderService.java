@@ -17,12 +17,17 @@ public class OrderService {
 OrderRepository orderRepository;
 
     @Transactional
-    public List<Order> findAllOrder(){
+    public List<OrderFullDTO> findAllOrder(){
        List<Order> list = orderRepository.findAll();
 
-      // return list.stream().map(x -> new OrderFullDTO(x)).toList();
-       return orderRepository.findAll();
+       return list.stream().map(x -> new OrderFullDTO(x)).toList();
+     
        
+    }
+
+    @Transactional
+    public OrderFullDTO findByIdOrder(Long id){
+        return new OrderFullDTO(orderRepository.findById(id).get());
     }
 
 

@@ -19,6 +19,18 @@ public class OrderFullDTO {
         this.moment = order.getMoment();
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDateTime getMoment() {
+        return moment;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
 
 
 }

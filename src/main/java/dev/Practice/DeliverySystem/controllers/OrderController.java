@@ -10,6 +10,7 @@ import dev.Practice.DeliverySystem.model.services.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -23,14 +24,13 @@ public class OrderController {
     OrderRepository orderRepository;
 
     @GetMapping
-    public List<Order> getFullOrderDtos() {
-
-
-        return   service.findAllOrder();
-        
-        
+    public List<OrderFullDTO> getFullOrderDtos() {
+        return service.findAllOrder();
     }
-
+    @GetMapping("/{id}")
+    public OrderFullDTO getDtoById(@PathVariable Long id){
+       return service.findByIdOrder(id);
+    }
 
     
     
