@@ -10,11 +10,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import dev.Practice.DeliverySystem.model.entities.Order;
 import dev.Practice.DeliverySystem.model.entities.Payment;
+import dev.Practice.DeliverySystem.model.entities.Product;
 import dev.Practice.DeliverySystem.model.entities.User;
 import dev.Practice.DeliverySystem.model.entities.Enums.OrderStatus;
 import dev.Practice.DeliverySystem.model.repositories.CategoryRepository;
 import dev.Practice.DeliverySystem.model.repositories.OrderRepository;
 import dev.Practice.DeliverySystem.model.repositories.PaymentRepository;
+import dev.Practice.DeliverySystem.model.repositories.ProductRepository;
 import dev.Practice.DeliverySystem.model.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import dev.Practice.DeliverySystem.model.entities.Category;
@@ -24,6 +26,9 @@ import dev.Practice.DeliverySystem.model.entities.Category;
 public class Config implements CommandLineRunner {
 
 public static final DateTimeFormatter fmt = DateTimeFormatter.ISO_DATE_TIME;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @Autowired 
     UserRepository userRepository;
@@ -40,7 +45,12 @@ public static final DateTimeFormatter fmt = DateTimeFormatter.ISO_DATE_TIME;
     @Transactional
     @Override
     public void run(String... args) throws Exception{
-
+		Product prod1 = new Product(null, "The Lord of the Rings", 90.0,"Lorem ipsum dolor sit amet, consectetur.", "");
+		Product prod2 = new Product(null, "Smart TV", 1500.0,"Nulla eu imperdiet purus. Maecenas ante.", "");
+		Product prod3 = new Product(null, "Macbook Pro", 1250.0,"Nam eleifend maximus tortor, at mollis.", "");
+		Product prod4 = new Product(null, "PC Gamer",1200.0 ,"Donec aliquet odio ac rhoncus cursus.", "");
+		Product prod5 = new Product(null, "Rails for Dummies", 100.99,"Cras fringilla convallis sem vel faucibus.", "");
+        
 
         Category c1 = new Category(null, "books");
         Category c2 = new Category(null, "Eletronics");
@@ -55,7 +65,7 @@ public static final DateTimeFormatter fmt = DateTimeFormatter.ISO_DATE_TIME;
         Order o3 = new Order(null, LocalDateTime.parse("2019-06-20T19:53:07Z",fmt), OrderStatus.WAITING_PAYMENT, u2);
 
         Payment p1 = new Payment(null, Instant.parse("2019-06-20T19:53:07Z"), o1);
-        
+            productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5));
             categoryRepository.saveAll(Arrays.asList(c1,c2,c3));
             userRepository.saveAll(Arrays.asList(u1,u2,u3));
             orderRepository.saveAll(Arrays.asList(o1,o2,o3)); 

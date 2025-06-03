@@ -6,27 +6,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.Practice.DeliverySystem.model.entities.Category;
-import dev.Practice.DeliverySystem.model.services.CategoryService;
+import dev.Practice.DeliverySystem.model.entities.Product;
+import dev.Practice.DeliverySystem.model.services.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
 
 @RestController
-@RequestMapping(value = "/categories")
-public class CategoryController {
+@RequestMapping(value = "/products")
+public class ProductController {
     @Autowired
-    CategoryService service;
+    ProductService service;
 
     @GetMapping
-    public List<Category> getAll() {
+    public List<Product> getAll() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable Long id) {
-        return service.findById(id);
+    public Product getProductById(@PathVariable Long id) {
+        return service.findByIDProduct(id);
     }
     
     
