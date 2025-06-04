@@ -50,13 +50,12 @@ public static final DateTimeFormatter fmt = DateTimeFormatter.ISO_DATE_TIME;
 		Product prod3 = new Product(null, "Macbook Pro", 1250.0,"Nam eleifend maximus tortor, at mollis.", "");
 		Product prod4 = new Product(null, "PC Gamer",1200.0 ,"Donec aliquet odio ac rhoncus cursus.", "");
 		Product prod5 = new Product(null, "Rails for Dummies", 100.99,"Cras fringilla convallis sem vel faucibus.", "");
-        
+        productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5));
 
         Category c1 = new Category(null, "books");
         Category c2 = new Category(null, "Eletronics");
         Category c3 = new Category(null, "Computers");
-         productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5));
-            categoryRepository.saveAll(Arrays.asList(c1,c2,c3));
+        categoryRepository.saveAll(Arrays.asList(c1,c2,c3));
 
         //adicionando a tabela de relacionamento das categorias de produtos N:N
         c1.getProducts().addAll(Arrays.asList(prod1, prod5));
