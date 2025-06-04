@@ -21,8 +21,8 @@ public class Order {
     private LocalDateTime moment;
     @Enumerated(EnumType.STRING)  //transforma em uma enum do tipo string no db  
     private OrderStatus orderStatus;
-    @ManyToOne
     
+    @ManyToOne
     @JoinColumn(name = "user_id") //decclarando a coluna de chave estranjeira e o tipo dela abaixo
     private User user;
 

@@ -55,6 +55,15 @@ public static final DateTimeFormatter fmt = DateTimeFormatter.ISO_DATE_TIME;
         Category c1 = new Category(null, "books");
         Category c2 = new Category(null, "Eletronics");
         Category c3 = new Category(null, "Computers");
+         productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5));
+            categoryRepository.saveAll(Arrays.asList(c1,c2,c3));
+
+        //adicionando a tabela de relacionamento das categorias de produtos N:N
+        c1.getProducts().addAll(Arrays.asList(prod1, prod5));
+        c2.getProducts().addAll(Arrays.asList(prod2));
+        c3.getProducts().addAll(Arrays.asList(prod3, prod4));
+       productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5));
+      
 
         User u1 = new User(null,"Edgar Allan Poe","poe@gmail.com", "poe1234", "(55) 999112223111");
         User u2 = new User(null,"Tiago fernandes Avila","tiago@gmail.com", "1234", "(55) 999112223111");
@@ -65,8 +74,7 @@ public static final DateTimeFormatter fmt = DateTimeFormatter.ISO_DATE_TIME;
         Order o3 = new Order(null, LocalDateTime.parse("2019-06-20T19:53:07Z",fmt), OrderStatus.WAITING_PAYMENT, u2);
 
         Payment p1 = new Payment(null, Instant.parse("2019-06-20T19:53:07Z"), o1);
-            productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5));
-            categoryRepository.saveAll(Arrays.asList(c1,c2,c3));
+           
             userRepository.saveAll(Arrays.asList(u1,u2,u3));
             orderRepository.saveAll(Arrays.asList(o1,o2,o3)); 
             paymentRepository.saveAll(Arrays.asList(p1));

@@ -1,10 +1,19 @@
 package dev.Practice.DeliverySystem.model.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_category")
@@ -15,13 +24,16 @@ public class Category {
     
     private String categoryName;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="tb_prod_categ", joinColumns = @JoinColumn(name = "categ_id"), inverseJoinColumns = @JoinColumn(name = "prod_id ") )
+    private List<Product> products = new ArrayList<>();
 
     public Category(){
 
     }
 
     public Category(Long id, String categoryName) {
-        this.id = id;
+        this.id = id;ad
         this.categoryName = categoryName;
     }
 
@@ -64,6 +76,14 @@ public class Category {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
     
 
