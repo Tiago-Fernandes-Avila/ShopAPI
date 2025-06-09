@@ -35,9 +35,9 @@ public class UserController {
         return ResponseEntity.ok().body(list);
     }
     @GetMapping (value = "/{id}")
-    public UserFullDTO findUserFullDTOById(@PathVariable Long id){
+    public User findUserFullDTOById(@PathVariable Long id){
 
-        return service.findFullDtoById(id);
+        return userRepository.findById(id).get();
     }
     
     

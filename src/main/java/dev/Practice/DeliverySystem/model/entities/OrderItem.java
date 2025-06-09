@@ -4,6 +4,9 @@ package dev.Practice.DeliverySystem.model.entities;
 import java.io.Serial;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import dev.Practice.DeliverySystem.model.entities.PK.OrderItemPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -16,12 +19,13 @@ public class OrderItem implements Serializable{
     @Serial
     private static final Long serialVersionUID = 1L;
 
-@EmbeddedId
-private OrderItemPK id;
-
-private Double price;
-
+    private Double price;
 private Integer quantity;
+@EmbeddedId
+@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+private OrderItemPK id = new OrderItemPK();
+
+
 
 public OrderItem() {
 }
@@ -36,12 +40,14 @@ public OrderItem(Order order, Product product, Double price, Integer quantity) {
 public void setOrder(Order order){
     this.id.setOrder(order);
 }
+
+@JsonIgnore
 public Order getOrder(){
-    return this.id.getOrder();
+    return id.getOrder();
 }
 
-public void setProductId(Product product){
-    this.id.setProduct(product);
+public void setProduct(Product product){
+    id.setProduct(product);
 }
 public Product getProduct(){
     return this.id.getProduct();

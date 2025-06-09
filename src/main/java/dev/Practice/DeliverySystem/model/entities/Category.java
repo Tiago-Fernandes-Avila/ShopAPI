@@ -23,8 +23,7 @@ public class Category {
     private Long id;
     
     private String categoryName;
-
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="tb_prod_categ", joinColumns = @JoinColumn(name = "categ_id"), inverseJoinColumns = @JoinColumn(name = "prod_id ") )
     private List<Product> products = new ArrayList<>();
 

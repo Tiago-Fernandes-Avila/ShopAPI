@@ -3,6 +3,8 @@ package dev.Practice.DeliverySystem.model.entities.PK;
 import java.io.Serial;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dev.Practice.DeliverySystem.model.entities.Order;
 import dev.Practice.DeliverySystem.model.entities.Product;
 import jakarta.persistence.Column;
@@ -35,6 +37,7 @@ public class OrderItemPK implements Serializable{
     public void setProduct(Product product) {
         this.product = product;
     }
+    
     
     @Override
     public int hashCode() {

@@ -28,8 +28,8 @@ public class OrderController {
         return service.findAllOrder();
     }
     @GetMapping("/{id}")
-    public OrderFullDTO getDtoById(@PathVariable Long id){
-       return service.findByIdOrder(id);
+    public Order getDtoById(@PathVariable Long id){
+       return orderRepository.findById(id).get();
     }
 
     

@@ -2,10 +2,11 @@ package dev.Practice.DeliverySystem.model.entities;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+
 
 import dev.Practice.DeliverySystem.model.entities.Enums.OrderStatus;
 import jakarta.persistence.*;
@@ -23,16 +24,30 @@ public class Order {
     private OrderStatus orderStatus;
     
     @ManyToOne
-    @JoinColumn(name = "user_id") //decclarando a coluna de chave estranjeira e o tipo dela abaixo
+    @JoinColumn(name = "user_id") //declarando a coluna de chave estranjeira e o tipo dela abaixo
     private User user;
 
-    @OneToOne (mappedBy = "order")
-    private Payment payment;
+ 
+
+    @OneToMany (mappedBy = "id.order")
+    List<OrderItem> items = new ArrayList<>();
     
     
+    
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
+
     public Order(){
         
     }
+    
 
     public Order(Long id, LocalDateTime moment, OrderStatus orderStatus, User user) {
         this.id = id;
@@ -97,5 +112,11 @@ public class Order {
     public void setUser(User user) {
         this.user = user;
     }
+
+
+
+
+
+ 
     
 }

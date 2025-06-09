@@ -9,11 +9,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import dev.Practice.DeliverySystem.model.entities.Order;
+import dev.Practice.DeliverySystem.model.entities.OrderItem;
 import dev.Practice.DeliverySystem.model.entities.Payment;
 import dev.Practice.DeliverySystem.model.entities.Product;
 import dev.Practice.DeliverySystem.model.entities.User;
 import dev.Practice.DeliverySystem.model.entities.Enums.OrderStatus;
 import dev.Practice.DeliverySystem.model.repositories.CategoryRepository;
+import dev.Practice.DeliverySystem.model.repositories.OrderItemRepository;
 import dev.Practice.DeliverySystem.model.repositories.OrderRepository;
 import dev.Practice.DeliverySystem.model.repositories.PaymentRepository;
 import dev.Practice.DeliverySystem.model.repositories.ProductRepository;
@@ -42,6 +44,9 @@ public static final DateTimeFormatter fmt = DateTimeFormatter.ISO_DATE_TIME;
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    OrderItemRepository orderItemRepository;
+
     @Transactional
     @Override
     public void run(String... args) throws Exception{
@@ -61,22 +66,30 @@ public static final DateTimeFormatter fmt = DateTimeFormatter.ISO_DATE_TIME;
         c1.getProducts().addAll(Arrays.asList(prod1, prod5));
         c2.getProducts().addAll(Arrays.asList(prod2));
         c3.getProducts().addAll(Arrays.asList(prod3, prod4));
-       productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5));
+       categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
       
 
         User u1 = new User(null,"Edgar Allan Poe","poe@gmail.com", "poe1234", "(55) 999112223111");
         User u2 = new User(null,"Tiago fernandes Avila","tiago@gmail.com", "1234", "(55) 999112223111");
         User u3 = new User(null,"Antonio Vivaldi", "vivaldi@gmail.com", "winter1234", "(55)13123133123");
-
+            userRepository.saveAll(Arrays.asList(u1,u2,u3));
         Order o1 = new Order(null, LocalDateTime.parse("2019-06-20T19:53:07Z",fmt), OrderStatus.PAID, u1);
         Order o2 = new Order(null, LocalDateTime.parse("2019-06-20T19:53:07Z",fmt), OrderStatus.WAITING_PAYMENT,u2);
         Order o3 = new Order(null, LocalDateTime.parse("2019-06-20T19:53:07Z",fmt), OrderStatus.WAITING_PAYMENT, u2);
-
-        Payment p1 = new Payment(null, Instant.parse("2019-06-20T19:53:07Z"), o1);
-           
-            userRepository.saveAll(Arrays.asList(u1,u2,u3));
             orderRepository.saveAll(Arrays.asList(o1,o2,o3)); 
-            paymentRepository.saveAll(Arrays.asList(p1));
+        
+        
+            OrderItem orderItem1 = new OrderItem(o1, prod5, prod5.getPrice(), 1);
+            OrderItem orderItem2 = new OrderItem(o1, prod1, prod1.getPrice(),1);
+            OrderItem orderItem3 = new OrderItem(o2, prod2, prod2.getPrice(), 1);
+            OrderItem orderItem4 = new OrderItem(o2, prod4, prod4.getPrice(), 5);
+            OrderItem orderItem5 = new OrderItem(o3, prod3, prod3.getPrice(), 1);
+        
+            orderItemRepository.saveAll(Arrays.asList(orderItem1,orderItem2,orderItem3,orderItem4,orderItem5));
+
+            
+           
+        
     }
         
    
