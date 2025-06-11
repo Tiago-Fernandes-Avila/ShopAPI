@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import dev.Practice.DeliverySystem.model.DTO.ProductDTO;
 import dev.Practice.DeliverySystem.model.entities.Product;
 import dev.Practice.DeliverySystem.model.repositories.ProductRepository;
 
@@ -23,6 +24,11 @@ public List<Product> findAll(){
 @Transactional 
 public Product findByIDProduct(Long id){
     return repository.findById(id).get();
+}
+
+@Transactional
+public void SaveProduct(ProductDTO productDTO){
+    repository.save(new Product(null, productDTO.getName(),productDTO.getPrice(),productDTO.getDesc(),productDTO.getImgUrl()));
 }
 
 
