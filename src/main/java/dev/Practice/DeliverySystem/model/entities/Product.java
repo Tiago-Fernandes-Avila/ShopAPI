@@ -7,11 +7,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 
 @Entity
@@ -19,8 +24,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    
     private Long id;
 
     private String name;
@@ -29,10 +32,16 @@ public class Product {
     @Column(length = 10000)
     private String Description;
     @Column (length = 10000)    
+    
     private String urlImg;
+    
     @JsonIgnore
     @ManyToMany (mappedBy="products")
     List<Category> categories;
+    
+    @OneToMany (mappedBy= "id.product")
+    Set<OrderItem> items = new HashSet<>();
+
 
     public List<Category> getCategories() {
         return categories;
@@ -43,6 +52,9 @@ public class Product {
     public Product(){
 
     }
+
+
+
     public Product(Long id, String name, Double price, String description, String urlImg) {
         this.id = id;
         this.name = name;
@@ -116,7 +128,20 @@ public class Product {
         return true;
     }
 
-    
+    @JsonIgnore
+    public List<Order> getOrders(){
+        List<Order> list = new ArrayList<>();
+        for (OrderItem i : items) {
+            if (i == null || i.getOrder() == null) {
+                System.out.println("Encontrado um valor nulo!");
+            }
+            else{
+                list.add(i.getOrder());
+            }
+
+        }
+        return list;
+    }    
 
     
 }
