@@ -2,12 +2,15 @@ package dev.Practice.DeliverySystem.model.entities;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 @Entity
@@ -23,8 +26,11 @@ private Long id;
 private Instant paymentMoment;
 
 @OneToOne
+@MapsId
 @JoinColumn(name = "order_id")
+@JsonIgnore
 private Order order;
+
 
 public Payment(){
 
@@ -52,6 +58,11 @@ public void setPaymentMoment(Instant paymentMoment) {
     this.paymentMoment = paymentMoment;
 }
 
+
+public Order getOrder(){
+    return this.order;
+}
+
 @Override
 public int hashCode() {
     final int prime = 31;
@@ -75,6 +86,10 @@ public boolean equals(Object obj) {
     } else if (!id.equals(other.id))
         return false;
     return true;
+}
+
+public void setOrder(Order order) {
+    this.order = order;
 }
 
 

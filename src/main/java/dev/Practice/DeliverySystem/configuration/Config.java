@@ -3,6 +3,7 @@ package dev.Practice.DeliverySystem.configuration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -87,9 +88,12 @@ public static final DateTimeFormatter fmt = DateTimeFormatter.ISO_DATE_TIME;
         
             orderItemRepository.saveAll(Arrays.asList(orderItem1,orderItem2,orderItem3,orderItem4,orderItem5));
 
-            
+            Payment payment1 = new Payment(null, Instant.now().plus(4, ChronoUnit.HOURS ),o1);
+            o1.setPayment(payment1);
+
+            orderRepository.save(o1);
            
-        
+            
     }
         
    

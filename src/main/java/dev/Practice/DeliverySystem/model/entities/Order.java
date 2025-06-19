@@ -1,9 +1,12 @@
 package dev.Practice.DeliverySystem.model.entities;
 
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -13,7 +16,9 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="tb_order")
-public class Order {
+public class Order implements Serializable{
+    @Serial
+    private final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -27,9 +32,10 @@ public class Order {
     @JoinColumn(name = "user_id") //declarando a coluna de chave estranjeira e o tipo dela abaixo
     private User user;
 
- 
+    @OneToOne (mappedBy="order", cascade=CascadeType.ALL)
+    private Payment payment;
 
-    @OneToMany (mappedBy = "id.order")
+    @OneToMany (mappedBy = "id.order", cascade = CascadeType.ALL) //ela controla quais operações (como persist, merge, remove, etc.) em uma entidade "pai" devem ser automaticamente propagadas para as entidades "filhas" relacionadas a ela.
     List<OrderItem> items = new ArrayList<>();
     
     
@@ -80,6 +86,14 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
+
+    public Double getTotal(){
+        Double sum = 0.0;
+         Double totalPrice = items.stream().collect(Collectors.summingDouble(x -> x.getSubTotalPrice()));
+        return totalPrice;
+    
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -111,6 +125,16 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
 

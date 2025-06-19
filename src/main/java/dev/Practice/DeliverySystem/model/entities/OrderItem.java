@@ -20,7 +20,7 @@ public class OrderItem implements Serializable{
     private static final Long serialVersionUID = 1L;
 
     private Double price;
-private Integer quantity;
+    private Integer quantity;
 @EmbeddedId
 @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 private OrderItemPK id = new OrderItemPK();
@@ -35,6 +35,11 @@ public OrderItem(Order order, Product product, Double price, Integer quantity) {
     id.setProduct(product);
     this.price = price;
     this.quantity = quantity;
+}
+
+
+public Double getSubTotalPrice(){
+    return quantity * price;
 }
 
 public void setOrder(Order order){
