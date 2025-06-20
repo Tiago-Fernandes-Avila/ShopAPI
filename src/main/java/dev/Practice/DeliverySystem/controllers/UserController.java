@@ -17,10 +17,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
+
 import dev.Practice.DeliverySystem.model.DTO.UserFullDTO;
 
 import dev.Practice.DeliverySystem.model.repositories.UserRepository;
 import dev.Practice.DeliverySystem.model.services.UserService;
+import dev.Practice.DeliverySystem.model.services.servicesexceptions.ResourceNotFoundException;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,13 +50,13 @@ public class UserController {
     }
     @GetMapping (value = "/{id}")
     public User findUserFullDTOById(@PathVariable Long id){
-
-        return userRepository.findById(id).get();
+          Optional<User> obj = userRepository.findById(id);
+        return obj.orElseThrow(()-> new ResourceNotFoundException(id));
     }
     
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<User> postMethodName(@RequestBody User entity) {
+    public ResponseEntity<User> insertUser(@RequestBody User entity) {
         service.insertUser(entity);
     URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                                                   .path("/{id}")
