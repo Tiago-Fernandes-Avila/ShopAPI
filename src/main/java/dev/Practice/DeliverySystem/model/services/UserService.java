@@ -34,4 +34,15 @@ public class UserService {
        return repository.save(obj);
     }
 
+    @Transactional
+    public void deleteUser(Long id){ 
+        try{
+            repository.deleteById(id);
+       
+        }
+        catch(IllegalArgumentException e){
+          e.getStackTrace();
+          e.getMessage();
+        }
+    }
 }
