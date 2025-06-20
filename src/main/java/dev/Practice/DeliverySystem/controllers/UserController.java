@@ -23,6 +23,8 @@ import dev.Practice.DeliverySystem.model.repositories.UserRepository;
 import dev.Practice.DeliverySystem.model.services.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -67,7 +69,12 @@ public class UserController {
        return ResponseEntity.noContent().build();
     }
 
-    
+    @PutMapping("update/{id}")
+    public ResponseEntity<User> putUser(@PathVariable Long id, @RequestBody User entity) {
+    entity =  service.UpdateUser(id, entity);
+        
+        return ResponseEntity.ok().body(entity);
+    }
 
 
 
