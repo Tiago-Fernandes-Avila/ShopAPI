@@ -29,5 +29,9 @@ public class UserService {
         return uDto;
 
     }
+    @Transactional
+    public User insertUser(User obj){
+       return repository.save(obj);
+    }
 
 }
